@@ -1,0 +1,16 @@
+<form class="search-grid card-surface" [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field appearance="outline">
+    <mat-label>Designation</mat-label>
+    <input matInput formControlName="designation" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Department</mat-label>
+    <input matInput formControlName="department" />
+  </mat-form-field>
+
+  <div class="actions-row">
+    <button mat-raised-button color="primary" type="submit">Search</button>
+    <button mat-stroked-button type="button" (click)="clear()">Reset</button>
+  </div>
+</form>
