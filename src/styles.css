@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import './styles/tokens.css';
+@import './styles/theme.css';
+@import './styles/typography.css';
+@import './styles/spacing.css';
+@import './styles/utilities.css';
+@import './styles/material-overrides.css';
+@import './styles/bootstrap-overrides.css';
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}

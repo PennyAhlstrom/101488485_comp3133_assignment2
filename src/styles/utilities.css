@@ -1,0 +1,27 @@
+.page-shell {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: var(--space-6);
+}
+
+.card-surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.actions-row {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: center;
+}

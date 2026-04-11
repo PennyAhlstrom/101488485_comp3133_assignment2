@@ -1,0 +1,19 @@
+.section-gap {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.stack-sm {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.stack-md {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.stack-lg {
+  display: grid;
+  gap: var(--space-6);
+}

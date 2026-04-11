@@ -1,0 +1,9 @@
+.mat-mdc-card,
+.mat-mdc-dialog-surface {
+  border-radius: var(--radius-lg) !important;
+}
+
+.mdc-text-field--filled,
+.mdc-text-field--outlined {
+  border-radius: var(--radius-md) !important;
+}
