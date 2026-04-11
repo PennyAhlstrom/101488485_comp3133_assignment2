@@ -16,8 +16,13 @@ export class AuthService {
       variables: { input },
       fetchPolicy: 'no-cache',
     }).valueChanges.pipe(
-      map(result => result.data.login),
-      map(payload => {
+      map(result => {
+        if (!result.data?.login) {
+          throw new Error('Login failed.');
+        }
+
+        const payload = result.data.login as AuthPayload;
+
         this.sessionService.setSession(payload.token, payload.user);
         return payload;
       })
@@ -28,7 +33,14 @@ export class AuthService {
     return this.apollo.mutate<{ signup: User }>({
       mutation: SIGNUP_MUTATION,
       variables: { input },
-    }).pipe(map(result => result.data!.signup));
+    }).pipe(
+      map(result => {
+        if (!result.data?.signup) {
+          throw new Error('Signup failed.');
+        }
+        return result.data.signup as User;
+      })
+    );
   }
 
   logout(): void {

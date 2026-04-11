@@ -57,7 +57,19 @@ export class EmployeeFormComponent implements OnInit {
 
     if (this.employeeId) {
       this.employeeService.getEmployeeById(this.employeeId).subscribe({
-        next: (employee) => this.form.patchValue(employee),
+        next: (employee) => {
+            this.form.patchValue({
+                first_name: employee.first_name,
+                last_name: employee.last_name,
+                email: employee.email,
+                gender: employee.gender,
+                designation: employee.designation,
+                salary: employee.salary,
+                date_of_joining: employee.date_of_joining,
+                department: employee.department,
+                employee_photo: employee.employee_photo ?? '',
+            });
+            },
         error: (error) => this.errorMessage = error?.message || 'Unable to load employee.',
       });
     }

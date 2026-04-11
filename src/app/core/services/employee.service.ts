@@ -19,7 +19,14 @@ export class EmployeeService {
     return this.apollo.watchQuery<{ getEmployees: Employee[] }>({
       query: GET_EMPLOYEES_QUERY,
       fetchPolicy: 'no-cache',
-    }).valueChanges.pipe(map(result => result.data.getEmployees));
+    }).valueChanges.pipe(
+      map(result => {
+        if (!result.data?.getEmployees) {
+          throw new Error('No employees returned.');
+        }
+        return result.data.getEmployees as Employee[];
+      })
+    );
   }
 
   getEmployeeById(id: string): Observable<Employee> {
@@ -27,7 +34,14 @@ export class EmployeeService {
       query: GET_EMPLOYEE_BY_ID_QUERY,
       variables: { id },
       fetchPolicy: 'no-cache',
-    }).valueChanges.pipe(map(result => result.data.getEmployeeById));
+    }).valueChanges.pipe(
+      map(result => {
+        if (!result.data?.getEmployeeById) {
+          throw new Error('Employee not found.');
+        }
+        return result.data.getEmployeeById as Employee;
+      })
+    );
   }
 
   searchEmployees(designation?: string, department?: string): Observable<Employee[]> {
@@ -38,7 +52,11 @@ export class EmployeeService {
         department: department || null,
       },
       fetchPolicy: 'no-cache',
-    }).valueChanges.pipe(map(result => result.data.searchEmployees));
+    }).valueChanges.pipe(
+      map(result => {
+        return (result.data?.searchEmployees ?? []) as Employee[];
+      })
+    );
   }
 
   addEmployee(input: AddEmployeeInput): Observable<Employee> {
@@ -46,7 +64,14 @@ export class EmployeeService {
       mutation: ADD_EMPLOYEE_MUTATION,
       variables: { input },
       refetchQueries: [{ query: GET_EMPLOYEES_QUERY }],
-    }).pipe(map(result => result.data!.addEmployee));
+    }).pipe(
+      map(result => {
+        if (!result.data?.addEmployee) {
+          throw new Error('Add employee failed.');
+        }
+        return result.data.addEmployee as Employee;
+      })
+    );
   }
 
   updateEmployee(id: string, input: UpdateEmployeeInput): Observable<Employee> {
@@ -54,7 +79,14 @@ export class EmployeeService {
       mutation: UPDATE_EMPLOYEE_MUTATION,
       variables: { id, input },
       refetchQueries: [{ query: GET_EMPLOYEES_QUERY }],
-    }).pipe(map(result => result.data!.updateEmployee));
+    }).pipe(
+      map(result => {
+        if (!result.data?.updateEmployee) {
+          throw new Error('Update employee failed.');
+        }
+        return result.data.updateEmployee as Employee;
+      })
+    );
   }
 
   deleteEmployee(id: string): Observable<Employee> {
@@ -62,6 +94,13 @@ export class EmployeeService {
       mutation: DELETE_EMPLOYEE_MUTATION,
       variables: { id },
       refetchQueries: [{ query: GET_EMPLOYEES_QUERY }],
-    }).pipe(map(result => result.data!.deleteEmployee));
+    }).pipe(
+      map(result => {
+        if (!result.data?.deleteEmployee) {
+          throw new Error('Delete employee failed.');
+        }
+        return result.data.deleteEmployee as Employee;
+      })
+    );
   }
 }
