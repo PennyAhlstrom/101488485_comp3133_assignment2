@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+  <div class="toolbar-inner page-shell">
+    <a routerLink="/employees" class="brand">Employee Manager</a>
+
+    <div class="actions-row">
+      <span class="muted" *ngIf="sessionService.user() as user">{{ user.username }}</span>
+      <button mat-raised-button color="accent" routerLink="/employees/new">Add Employee</button>
+      <button mat-stroked-button type="button" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</mat-toolbar>
