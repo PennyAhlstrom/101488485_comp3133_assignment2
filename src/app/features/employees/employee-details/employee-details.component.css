@@ -1,0 +1,23 @@
+.details-card {
+  padding: var(--space-6);
+}
+
+.details-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 220px 1fr;
+}
+
+.photo {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+@media (max-width: 768px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
