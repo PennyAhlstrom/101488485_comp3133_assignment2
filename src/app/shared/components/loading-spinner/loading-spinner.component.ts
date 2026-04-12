@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-loading-spinner',
   standalone: true,
-  imports: [MatProgressSpinnerModule],
-  template: `<div class="spinner-wrap"><mat-spinner diameter="40" /></div>`,
-  styles: [`.spinner-wrap { display:flex; justify-content:center; padding:24px; }`],
+  template: `
+    <div class="d-flex justify-content-center py-4">
+      <div class="spinner-border text-primary" role="status" aria-hidden="true"></div>
+    </div>
+  `,
 })
 export class LoadingSpinnerComponent {}
