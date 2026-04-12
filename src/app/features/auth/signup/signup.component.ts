@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
 import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
 
 @Component({
@@ -29,6 +30,7 @@ export class SignupComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly notificationService = inject(NotificationService);
 
   isSubmitting = false;
   errorMessage = '';
@@ -51,11 +53,13 @@ export class SignupComponent {
     this.authService.signup(this.form.getRawValue()).subscribe({
       next: () => {
         this.isSubmitting = false;
+        this.notificationService.success('Account created successfully.');
         this.router.navigate(['/login']);
       },
       error: (error) => {
         this.isSubmitting = false;
         this.errorMessage = error?.message || 'Signup failed.';
+        this.notificationService.error(this.errorMessage);
       },
     });
   }
