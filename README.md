@@ -1,59 +1,277 @@
-# 101488485Comp3133Assignment2
+# 🧑‍💼 Employee Management System  
+**COMP3133 – Assignment II (Frontend + Backend Integration)**
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
+---
 
-## Development server
+## 📌 Overview
 
-To start a local development server, run:
+This project is a full-stack **Employee Management System** built using:
+
+- **Frontend:** Angular (Standalone Components, Material UI, Bootstrap)
+- **Backend:** Node.js + Express + GraphQL + MongoDB
+- **Communication:** Apollo Angular (GraphQL client)
+
+The application allows users to:
+- Register and log in
+- View all employees
+- Search employees by department/designation
+- Add, edit, and delete employees
+- View detailed employee information
+
+---
+
+## 🧱 Tech Stack
+
+### Frontend
+- Angular (Standalone APIs)
+- Angular Material
+- Bootstrap (layout utilities)
+- Apollo Angular
+- RxJS
+
+### Backend
+- Node.js
+- Express
+- GraphQL
+- MongoDB (Mongoose)
+- bcrypt (password hashing)
+- JWT (authentication)
+
+---
+
+## 📁 Project Structure
+
+### Frontend (`assignment2`)
+```
+src/app
+├── core
+│   ├── constants
+│   ├── guards
+│   ├── interceptors
+│   ├── models
+│   └── services
+├── features
+│   ├── auth
+│   │   ├── login
+│   │   └── signup
+│   └── employees
+│       ├── employee-list
+│       ├── employee-form
+│       ├── employee-details
+│       └── employee-search-bar
+├── layout
+│   └── app-shell
+├── shared
+│   └── components
+└── graphql
+```
+
+### Backend (`assignment1`)
+```
+├── models
+├── resolvers
+├── schemas
+├── EmployeeData.json
+├── UserData.json
+├── seedUsers.js
+├── seedEmployees.js
+└── index.js
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd <project-folder>
+```
+
+---
+
+## ⚙️ Backend Setup
+
+Navigate to backend:
+
+```bash
+cd comp3133_101488485_assignment1
+```
+
+### Install dependencies
+```bash
+npm install
+```
+
+### Configure environment variables
+Create `.env`:
+
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+```
+
+---
+
+### Seed the database
+
+```bash
+npm run seed:users
+npm run seed:employees
+```
+
+---
+
+### Start backend server
+
+```bash
+npm start
+```
+
+Server runs at:
+```
+http://localhost:8081/graphql
+```
+
+---
+
+## 💻 Frontend Setup
+
+Navigate to frontend:
+
+```bash
+cd ../101488485_comp3133_assignment2
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+---
+
+### Run Angular app
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+App runs at:
+```
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
+## 🔐 Authentication
+
+- Users must **sign up or use seeded users**
+- JWT token is stored in **localStorage**
+- Route guards protect `/employees`
+
+---
+
+## 👥 Features
+
+### 🔑 Authentication
+- Login / Signup with validation
+- Session persistence across refresh
+- Logout functionality
+
+### 📋 Employee Management
+- View all employees (table view)
+- View employee details
+- Add new employee
+- Edit employee
+- Delete employee
+
+### 🔎 Search
+- Search by:
+  - Department
+  - Designation
+- Reset to view all employees
+
+### 🎨 UI/UX
+- Material UI components
+- Responsive layout
+- Centralized styling (CSS variables)
+- Loading, error, and empty states
+
+---
+
+## 📡 GraphQL Operations
+
+### Queries
+- `getEmployees`
+- `getEmployeeById`
+- `searchEmployees`
+
+### Mutations
+- `addEmployee`
+- `updateEmployee`
+- `deleteEmployee`
+- `login`
+- `signup`
+
+---
+
+## 📷 Screenshots
+
+> Add screenshots here
+
+```
+public/screenshots/login.png
+public/screenshots/employee-list.png
+public/screenshots/employee-form.png
 ```
 
-## Building
+---
 
-To build the project run:
+## ⚠️ Known Issues / Notes
 
-```bash
-ng build
-```
+- SSR was disabled/simplified to avoid session issues
+- Seeded users must be created via script (for password hashing)
+- Search is triggered via explicit submit (not live typing)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🧪 Testing
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Backend tested using:
+- Postman (GraphQL queries/mutations)
 
-```bash
-ng test
-```
+Frontend tested via:
+- Browser interaction
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 📌 Submission Links
 
-```bash
-ng e2e
-```
+- **GitHub Repo:** <your-repo-link>
+- **Backend Endpoint:** http://localhost:8081/graphql
+- **Frontend App:** http://localhost:4200
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## ✨ Future Improvements
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Pagination & sorting
+- Material dialog for delete confirmation
+- Profile image upload to cloud storage
+- Role-based authentication
+- Improved animations & UX polish
+
+---
+
+## 👤 Author
+
+**Penny Ahlstrom**  
+COMP3133 – Full Stack Development
+
+---
+
+## 📄 License
+
+This project is for academic purposes only.
