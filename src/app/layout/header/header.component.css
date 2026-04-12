@@ -2,6 +2,34 @@
   display: block;
 }
 
+.app-navbar {
+  background: #0d6efd;
+}
+
+.app-navbar .navbar-brand,
+.app-navbar .nav-link,
+.app-navbar .navbar-text {
+  color: #ffffff;
+}
+
+.app-navbar .nav-link {
+  opacity: 0.92;
+}
+
+.app-navbar .nav-link:hover,
+.app-navbar .navbar-brand:hover,
+.app-navbar .active-link {
+  color: #ffffff;
+  opacity: 1;
+}
+
 .navbar-toggler:focus {
   box-shadow: none;
+}
+
+.user-pill {
+  display: inline-block;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
 }

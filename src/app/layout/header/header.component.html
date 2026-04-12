@@ -3,7 +3,7 @@
     <a class="navbar-brand fw-semibold" routerLink="/employees">Employee Manager</a>
 
     <button
-      class="navbar-toggler border-0 bg-light"
+      class="navbar-toggler border-0 bg-white"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#mainNavbar"
@@ -14,14 +14,35 @@
     </button>
 
     <div class="collapse navbar-collapse" id="mainNavbar">
-      <div class="ms-auto d-flex align-items-lg-center gap-2 flex-column flex-lg-row mt-3 mt-lg-0">
-        <span class="navbar-text me-lg-2" *ngIf="sessionService.user() as user">
-          Signed in as {{ user.username }}
-        </span>
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/employees"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }">
+            View All
+          </a>
+        </li>
 
-        <a class="btn btn-light btn-sm" routerLink="/employees/new">Add Employee</a>
-        <button class="btn btn-outline-light btn-sm" type="button" (click)="logout()">Logout</button>
-      </div>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/employees/new" routerLinkActive="active-link">
+            Add Employee
+          </a>
+        </li>
+
+        <li class="nav-item" *ngIf="sessionService.user() as user">
+          <span class="navbar-text me-lg-2" *ngIf="sessionService.user() as user">
+            Signed in as {{ user.username }}
+          </span>
+        </li>
+
+        <li class="nav-item">
+          <button class="btn btn-outline-light btn-sm ms-lg-2 mt-2 mt-lg-0" type="button" (click)="logout()">
+            Logout
+          </button>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
