@@ -25,3 +25,13 @@
   flex-wrap: wrap;
   align-items: center;
 }
+
+.snackbar-success .mdc-snackbar__surface {
+  background-color: var(--color-success) !important;
+  color: white !important;
+}
+
+.snackbar-error .mdc-snackbar__surface {
+  background-color: var(--color-danger) !important;
+  color: white !important;
+}
