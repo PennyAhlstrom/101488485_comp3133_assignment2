@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { EmployeeService } from '../../../core/services/employee.service';
 import { UploadService } from '../../../core/services/upload.service';
 import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-employee-form',
@@ -31,6 +32,7 @@ export class EmployeeFormComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly employeeService = inject(EmployeeService);
   private readonly uploadService = inject(UploadService);
+  private readonly notificationService = inject(NotificationService);
 
   employeeId: string | null = null;
   isEditMode = false;
@@ -100,11 +102,15 @@ export class EmployeeFormComponent implements OnInit {
     request.subscribe({
       next: (employee) => {
         this.isSubmitting = false;
+        this.notificationService.success(
+          this.isEditMode ? 'Employee updated successfully.' : 'Employee created successfully.'
+        );
         this.router.navigate(['/employees', employee.id]);
       },
       error: (error) => {
         this.isSubmitting = false;
         this.errorMessage = error?.message || 'Save failed.';
+        this.notificationService.error(this.errorMessage);
       },
     });
   }
