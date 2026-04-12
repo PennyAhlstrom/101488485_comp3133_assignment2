@@ -20,22 +20,53 @@ The application allows users to:
 
 ---
 
+## Features
+
+- Signup
+- Login
+- Logout
+- Session persistence with token storage
+- List all employees
+- Search employees by department or designation
+- Add employee
+- View employee details
+- Update employee
+- Delete employee
+- Upload employee photo
+- Validation messages on auth and employee forms
+- Protected employee routes
+
+---
+
+## UI / UX Notes
+
+The frontend uses Bootstrap for:
+- responsive layout
+- navbar
+- cards
+- tables
+- forms
+- buttons
+- alerts
+- toasts
+
+---
+
 ## 🧱 Tech Stack
 
 ### Frontend
-- Angular (Standalone APIs)
-- Angular Material
-- Bootstrap (layout utilities)
+- Angular standalone components
 - Apollo Angular
-- RxJS
+- GraphQL
+- Bootstrap 5
+- Reactive Forms
 
 ### Backend
 - Node.js
 - Express
 - GraphQL
-- MongoDB (Mongoose)
-- bcrypt (password hashing)
-- JWT (authentication)
+- MongoDB / Mongoose
+- JWT authentication
 
 ---
 
@@ -60,9 +91,12 @@ src/app
 │       ├── employee-details
 │       └── employee-search-bar
 ├── layout
-│   └── app-shell
+│   ├── app-shell
+│   └── header
 ├── shared
-│   └── components
+│   ├── components
+│   ├── directives
+│   └── pipes
 └── graphql
 ```
 
