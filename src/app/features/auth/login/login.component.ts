@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../../core/services/auth.service';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,8 @@ export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly notificationService = inject(NotificationService);
+
 
   isSubmitting = false;
   errorMessage = '';
@@ -52,11 +55,13 @@ export class LoginComponent {
     this.authService.login(this.form.getRawValue()).subscribe({
       next: () => {
         this.isSubmitting = false;
+        this.notificationService.success('Login successful.');
         this.router.navigate(['/employees']);
       },
       error: (error) => {
         this.isSubmitting = false;
         this.errorMessage = error?.message || 'Login failed.';
+        this.notificationService.error(this.errorMessage);
       },
     });
   }
