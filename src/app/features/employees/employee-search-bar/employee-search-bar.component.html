@@ -1,16 +1,31 @@
-<form class="search-grid card-surface" [formGroup]="form" (ngSubmit)="submit()">
-  <mat-form-field appearance="outline">
-    <mat-label>Designation</mat-label>
-    <input matInput formControlName="designation" />
-  </mat-form-field>
+<div class="card page-card">
+  <div class="card-body">
+    <form class="row g-3 align-items-end" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="col-12 col-md-5">
+        <label class="form-label fw-semibold" for="designation">Position / Designation</label>
+        <input
+          id="designation"
+          appAutofocus
+          type="text"
+          class="form-control"
+          formControlName="designation"
+          placeholder="e.g. Developer" />
+      </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Department</mat-label>
-    <input matInput formControlName="department" />
-  </mat-form-field>
+      <div class="col-12 col-md-5">
+        <label class="form-label fw-semibold" for="department">Department</label>
+        <input
+          id="department"
+          type="text"
+          class="form-control"
+          formControlName="department"
+          placeholder="e.g. Engineering" />
+      </div>
 
-  <div class="actions-row">
-    <button mat-raised-button color="primary" type="submit">Search</button>
-    <button mat-stroked-button type="button" (click)="clear()">Reset</button>
+      <div class="col-12 col-md-2 d-grid gap-2">
+        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-outline-secondary" type="button" (click)="clear()">Clear</button>
+      </div>
+    </form>
   </div>
-</form>
+</div>

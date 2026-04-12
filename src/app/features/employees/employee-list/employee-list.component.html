@@ -1,70 +1,69 @@
-<div class="section-gap">
-  <div class="page-header card-surface">
-    <div>
-      <h1>Employees</h1>
-      <p class="muted">View, search, edit, and manage employee records.</p>
-    </div>
+<div class="d-flex flex-column gap-4">
+  <div class="card page-card">
+    <div class="card-body d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+      <div>
+        <h1 class="h3 page-title">Employees</h1>
+        <p class="page-subtitle">View, search, add, edit, and delete employee records.</p>
+      </div>
 
-    <div class="actions-row">
-      <button mat-stroked-button type="button" (click)="viewAll()">View All</button>
-      <a mat-raised-button color="primary" routerLink="/employees/new">Add Employee</a>
+      <div class="d-flex gap-2 flex-wrap">
+        <button class="btn btn-outline-secondary" type="button" (click)="viewAll()">View All</button>
+        <a class="btn btn-primary" routerLink="/employees/new">Add Employee</a>
+      </div>
     </div>
   </div>
 
-  <app-employee-search-bar
-    (search)="onSearch($event)"
-    (reset)="viewAll()"
-  />
+  <app-employee-search-bar (search)="onSearch($event)" (reset)="viewAll()" />
 
   <app-loading-spinner *ngIf="isLoading" />
-  <app-error-message *ngIf="!isLoading && errorMessage" [message]="errorMessage" />
-  <app-empty-state *ngIf="!isLoading && !errorMessage && employees.length === 0" message="No employees found." />
 
-  <div class="table-wrap card-surface" *ngIf="!isLoading && employees.length > 0">
-    <table mat-table [dataSource]="employees" class="full-width">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let employee">{{ employee.first_name }} {{ employee.last_name }}</td>
-      </ng-container>
+  <div *ngIf="!isLoading && errorMessage">
+    <app-error-message [message]="errorMessage" />
+  </div>
 
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
-        <td mat-cell *matCellDef="let employee">{{ employee.email }}</td>
-      </ng-container>
+  <app-empty-state
+    *ngIf="!isLoading && !errorMessage && employees.length === 0"
+    message="No employees found.">
+  </app-empty-state>
 
-      <ng-container matColumnDef="designation">
-        <th mat-header-cell *matHeaderCellDef>Designation</th>
-        <td mat-cell *matCellDef="let employee">{{ employee.designation }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="department">
-        <th mat-header-cell *matHeaderCellDef>Department</th>
-        <td mat-cell *matCellDef="let employee">{{ employee.department }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="salary">
-        <th mat-header-cell *matHeaderCellDef>Salary</th>
-        <td mat-cell *matCellDef="let employee">{{ employee.salary | currency }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let employee" ($click)="$event.stopPropagation()">
-          <div class="actions-row">
-            <button mat-stroked-button type="button" (click)="viewEmployee(employee.id)">View</button>
-            <button mat-stroked-button type="button" (click)="editEmployee(employee.id)">Edit</button>
-            <button mat-stroked-button color="warn" (click)="deleteEmployee(employee)">Delete</button>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns;"
-        class="clickable-row"
-        (click)="viewEmployee(row.id)">
-      </tr>
-    </table>
+  <div class="card page-card" *ngIf="!isLoading && employees.length > 0">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Position</th>
+              <th>Department</th>
+              <th>Salary</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employees">
+              <td class="fw-semibold">{{ employee | employeeName }}</td>
+              <td>{{ employee.email }}</td>
+              <td>{{ employee.designation }}</td>
+              <td>{{ employee.department }}</td>
+              <td>{{ employee.salary | currency }}</td>
+              <td class="text-end">
+                <div class="table-actions justify-content-end">
+                  <button class="btn btn-sm btn-outline-primary" type="button" (click)="viewEmployee(employee.id)">
+                    View
+                  </button>
+                  <button class="btn btn-sm btn-outline-secondary" type="button" (click)="editEmployee(employee.id)">
+                    Edit
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteEmployee(employee)">
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

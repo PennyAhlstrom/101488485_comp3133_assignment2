@@ -1,28 +1,72 @@
 <app-loading-spinner *ngIf="isLoading" />
-<app-error-message *ngIf="!isLoading && errorMessage" [message]="errorMessage" />
 
-<mat-card *ngIf="!isLoading && employee" class="card-surface details-card">
-  <div class="details-grid">
-    <img
-      *ngIf="employee.employee_photo"
-      [src]="employee.employee_photo"
-      [alt]="employee.first_name"
-      class="photo"
-    />
+<div *ngIf="!isLoading && errorMessage">
+  <app-error-message [message]="errorMessage" />
+</div>
 
-    <div class="stack-md">
-      <h1>{{ employee.first_name }} {{ employee.last_name }}</h1>
-      <p><strong>Email:</strong> {{ employee.email }}</p>
-      <p><strong>Gender:</strong> {{ employee.gender }}</p>
-      <p><strong>Designation:</strong> {{ employee.designation }}</p>
-      <p><strong>Department:</strong> {{ employee.department }}</p>
-      <p><strong>Salary:</strong> {{ employee.salary | currency }}</p>
-      <p><strong>Date of Joining:</strong> {{ employee.date_of_joining | date }}</p>
+<div class="card page-card" *ngIf="!isLoading && employee">
+  <div class="card-body p-4 p-lg-5">
+    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+      <div>
+        <h1 class="h3 page-title">{{ employee | employeeName }}</h1>
+        <p class="page-subtitle">Employee profile and employment details.</p>
+      </div>
 
-      <div class="actions-row">
-        <a mat-stroked-button routerLink="/employees">Back to Employees</a>
-        <a mat-raised-button color="primary" [routerLink]="['/employees', employee.id, 'edit']">Edit</a>
+      <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-outline-secondary" routerLink="/employees">Back to Employees</a>
+        <a class="btn btn-primary" [routerLink]="['/employees', employee.id, 'edit']">Edit Employee</a>
+      </div>
+    </div>
+
+    <div class="row g-4 align-items-start">
+      <div class="col-12 col-lg-4">
+        <ng-container *ngIf="employee.employee_photo; else noPhoto">
+          <img
+            [src]="employee.employee_photo"
+            [alt]="employee.first_name"
+            class="employee-photo-preview" />
+        </ng-container>
+
+        <ng-template #noPhoto>
+          <div class="employee-photo-placeholder">
+            No Photo
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="col-12 col-lg-8">
+        <div class="row g-4">
+          <div class="col-12 col-md-6">
+            <div class="detail-label">Email</div>
+            <p class="detail-value">{{ employee.email }}</p>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="detail-label">Gender</div>
+            <p class="detail-value">{{ employee.gender }}</p>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="detail-label">Position</div>
+            <p class="detail-value">{{ employee.designation }}</p>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="detail-label">Department</div>
+            <p class="detail-value">{{ employee.department }}</p>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="detail-label">Salary</div>
+            <p class="detail-value">{{ employee.salary | currency }}</p>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="detail-label">Date of Joining</div>
+            <p class="detail-value">{{ employee.date_of_joining | date }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</mat-card>
+</div>
