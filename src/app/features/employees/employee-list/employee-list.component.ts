@@ -12,6 +12,7 @@ import { EmptyStateComponent } from '../../../shared/components/empty-state/empt
 import { EmployeeSearchBarComponent } from '../employee-search-bar/employee-search-bar.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EmployeeDeleteDialogComponent } from '../employee-delete-dialog/employee-delete-dialog.component';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -36,6 +37,7 @@ export class EmployeeListComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly ngZone = inject(NgZone);
   private readonly dialog = inject(MatDialog);
+  private readonly notificationService = inject(NotificationService);
 
   employees: Employee[] = [];
   isLoading = true;
@@ -122,9 +124,13 @@ export class EmployeeListComponent implements OnInit {
       if (!confirmed) return;
 
       this.employeeService.deleteEmployee(employee.id).subscribe({
-        next: () => this.loadEmployees(),
+        next: () => {
+          this.notificationService.success('Employee deleted successfully.');
+          this.loadEmployees();
+        },
         error: (error) => {
           this.errorMessage = error?.message || 'Delete failed.';
+          this.notificationService.error(this.errorMessage);
         },
       });
     });
