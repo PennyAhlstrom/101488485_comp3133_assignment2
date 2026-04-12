@@ -15,50 +15,68 @@ import { AddEmployeeInput, Employee, UpdateEmployeeInput } from '../models/emplo
 export class EmployeeService {
   private readonly apollo = inject(Apollo);
 
-  getEmployees(): Observable<Employee[]> {
-    return this.apollo.watchQuery<{ getEmployees: Employee[] }>({
-      query: GET_EMPLOYEES_QUERY,
-      fetchPolicy: 'no-cache',
-    }).valueChanges.pipe(
-      map(result => {
-        if (!result.data?.getEmployees) {
-          throw new Error('No employees returned.');
-        }
-        return result.data.getEmployees as Employee[];
-      })
-    );
-  }
+getEmployees(): Observable<Employee[]> {
+  return this.apollo.watchQuery<{ getEmployees: Employee[] }>({
+    query: GET_EMPLOYEES_QUERY,
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  }).valueChanges.pipe(
+    map(result => {
+      console.log('getEmployees raw Apollo result:', result);
 
-  getEmployeeById(id: string): Observable<Employee> {
-    return this.apollo.watchQuery<{ getEmployeeById: Employee }>({
-      query: GET_EMPLOYEE_BY_ID_QUERY,
-      variables: { id },
-      fetchPolicy: 'no-cache',
-    }).valueChanges.pipe(
-      map(result => {
-        if (!result.data?.getEmployeeById) {
-          throw new Error('Employee not found.');
-        }
-        return result.data.getEmployeeById as Employee;
-      })
-    );
-  }
+      if (result.error) {
+        throw result.error;
+      }
 
-  searchEmployees(designation?: string, department?: string): Observable<Employee[]> {
-    return this.apollo.watchQuery<{ searchEmployees: Employee[] }>({
-      query: SEARCH_EMPLOYEES_QUERY,
-      variables: {
-        designation: designation || null,
-        department: department || null,
-      },
-      fetchPolicy: 'no-cache',
-    }).valueChanges.pipe(
-      map(result => {
-        return (result.data?.searchEmployees ?? []) as Employee[];
-      })
-    );
-  }
+      return (result.data?.getEmployees ?? []) as Employee[];
+    })
+  );
+}
 
+getEmployeeById(id: string): Observable<Employee> {
+  return this.apollo.watchQuery<{ getEmployeeById: Employee }>({
+    query: GET_EMPLOYEE_BY_ID_QUERY,
+    variables: { id },
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  }).valueChanges.pipe(
+    map(result => {
+      console.log('getEmployeeById raw Apollo result:', result);
+
+      if (result.error) {
+        throw result.error;
+      }
+
+      if (!result.data?.getEmployeeById) {
+        throw new Error('Employee not found.');
+      }
+
+      return result.data.getEmployeeById as Employee;
+    })
+  );
+}
+
+searchEmployees(designation?: string, department?: string): Observable<Employee[]> {
+  return this.apollo.watchQuery<{ searchEmployees: Employee[] }>({
+    query: SEARCH_EMPLOYEES_QUERY,
+    variables: {
+      designation: designation || null,
+      department: department || null,
+    },
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  }).valueChanges.pipe(
+    map(result => {
+      console.log('searchEmployees raw Apollo result:', result);
+
+      if (result.error) {
+        throw result.error;
+      }
+
+      return (result.data?.searchEmployees ?? []) as Employee[];
+    })
+  );
+}
   addEmployee(input: AddEmployeeInput): Observable<Employee> {
     return this.apollo.mutate<{ addEmployee: Employee }>({
       mutation: ADD_EMPLOYEE_MUTATION,
@@ -69,7 +87,7 @@ export class EmployeeService {
         if (!result.data?.addEmployee) {
           throw new Error('Add employee failed.');
         }
-        return result.data.addEmployee as Employee;
+        return result.data.addEmployee;
       })
     );
   }
@@ -84,7 +102,7 @@ export class EmployeeService {
         if (!result.data?.updateEmployee) {
           throw new Error('Update employee failed.');
         }
-        return result.data.updateEmployee as Employee;
+        return result.data.updateEmployee;
       })
     );
   }
@@ -99,7 +117,7 @@ export class EmployeeService {
         if (!result.data?.deleteEmployee) {
           throw new Error('Delete employee failed.');
         }
-        return result.data.deleteEmployee as Employee;
+        return result.data.deleteEmployee;
       })
     );
   }

@@ -10,23 +10,23 @@ export class AuthService {
   private readonly apollo = inject(Apollo);
   private readonly sessionService = inject(SessionService);
 
- login(input: LoginInput): Observable<AuthPayload> {
-  return this.apollo.query<{ login: AuthPayload }>({
-    query: LOGIN_QUERY,
-    variables: { input },
-    fetchPolicy: 'no-cache',
-  }).pipe(
-    map(result => {
-      if (!result.data?.login) {
-        throw new Error('Login failed.');
-      }
+  login(input: LoginInput): Observable<AuthPayload> {
+    return this.apollo.query<{ login: AuthPayload }>({
+      query: LOGIN_QUERY,
+      variables: { input },
+      fetchPolicy: 'no-cache',
+    }).pipe(
+      map(result => {
+        if (!result.data?.login) {
+          throw new Error('Login failed.');
+        }
 
-      const payload = result.data.login as AuthPayload;
-      this.sessionService.setSession(payload.token, payload.user);
-      return payload;
-    })
-  );
-}
+        const payload = result.data.login as AuthPayload;
+        this.sessionService.setSession(payload.token, payload.user);
+        return payload;
+      })
+    );
+  }
 
   signup(input: SignupInput): Observable<User> {
     return this.apollo.mutate<{ signup: User }>({

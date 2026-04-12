@@ -13,8 +13,6 @@ export const GET_EMPLOYEES_QUERY = gql`
       date_of_joining
       department
       employee_photo
-      created_at
-      updated_at
     }
   }
 `;
@@ -32,8 +30,6 @@ export const GET_EMPLOYEE_BY_ID_QUERY = gql`
       date_of_joining
       department
       employee_photo
-      created_at
-      updated_at
     }
   }
 `;
@@ -51,8 +47,6 @@ export const SEARCH_EMPLOYEES_QUERY = gql`
       date_of_joining
       department
       employee_photo
-      created_at
-      updated_at
     }
   }
 `;

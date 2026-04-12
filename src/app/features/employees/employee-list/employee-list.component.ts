@@ -49,7 +49,11 @@ export class EmployeeListComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        this.errorMessage = error?.message || 'Unable to load employees.';
+        console.log('getEmployees error:', error);
+        this.errorMessage =
+          error?.graphQLErrors?.[0]?.message ||
+          error?.message ||
+          'Unable to load employees.';
         this.isLoading = false;
       },
     });
@@ -70,7 +74,11 @@ export class EmployeeListComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        this.errorMessage = error?.message || 'Search failed.';
+        console.log('searchEmployees error:', error);
+        this.errorMessage =
+          error?.graphQLErrors?.[0]?.message ||
+          error?.message ||
+          'Search failed.';
         this.employees = [];
         this.isLoading = false;
       },
