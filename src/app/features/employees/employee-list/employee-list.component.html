@@ -1,13 +1,20 @@
 <div class="section-gap">
-  <div class="actions-row">
+  <div class="page-header card-surface">
     <div>
       <h1>Employees</h1>
-      <p class="muted">Manage all employee records.</p>
+      <p class="muted">View, search, edit, and manage employee records.</p>
     </div>
-    <a mat-raised-button color="primary" routerLink="/employees/new">Add Employee</a>
+
+    <div class="actions-row">
+      <button mat-stroked-button type="button" (click)="viewAll()">View All</button>
+      <a mat-raised-button color="primary" routerLink="/employees/new">Add Employee</a>
+    </div>
   </div>
 
-  <app-employee-search-bar (search)="onSearch($event)" (reset)="loadEmployees()" />
+  <app-employee-search-bar
+    (search)="onSearch($event)"
+    (reset)="viewAll()"
+  />
 
   <app-loading-spinner *ngIf="isLoading" />
   <app-error-message *ngIf="!isLoading && errorMessage" [message]="errorMessage" />
@@ -44,9 +51,9 @@
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let employee">
           <div class="actions-row">
-            <button mat-stroked-button (click)="viewEmployee(employee.id)">View</button>
-            <button mat-stroked-button (click)="editEmployee(employee.id)">Edit</button>
-            <button mat-stroked-button color="warn" (click)="deleteEmployee(employee.id)">Delete</button>
+            <button mat-stroked-button type="button" (click)="viewEmployee(employee.id)">View</button>
+            <button mat-stroked-button type="button" (click)="editEmployee(employee.id)">Edit</button>
+            <button mat-stroked-button color="warn" type="button" (click)="deleteEmployee(employee.id)">Delete</button>
           </div>
         </td>
       </ng-container>

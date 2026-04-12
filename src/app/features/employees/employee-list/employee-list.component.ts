@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, NgZone, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
@@ -29,6 +29,7 @@ import { EmployeeSearchBarComponent } from '../employee-search-bar/employee-sear
 export class EmployeeListComponent implements OnInit {
   private readonly employeeService = inject(EmployeeService);
   private readonly router = inject(Router);
+  private readonly ngZone = inject(NgZone);
 
   employees: Employee[] = [];
   isLoading = true;
@@ -45,22 +46,27 @@ export class EmployeeListComponent implements OnInit {
 
     this.employeeService.getEmployees().subscribe({
       next: (employees) => {
-        this.employees = employees;
-        this.isLoading = false;
+        this.ngZone.run(() => {
+          this.employees = employees;
+          this.isLoading = false;
+          this.errorMessage = '';
+        });
       },
       error: (error) => {
-        console.log('getEmployees error:', error);
-        this.errorMessage =
-          error?.graphQLErrors?.[0]?.message ||
-          error?.message ||
-          'Unable to load employees.';
-        this.isLoading = false;
+        this.ngZone.run(() => {
+          this.errorMessage = error?.message || 'Unable to load employees.';
+          this.employees = [];
+          this.isLoading = false;
+        });
       },
     });
   }
 
   onSearch(criteria: { designation: string; department: string }): void {
-    if (!criteria.designation && !criteria.department) {
+    const designation = criteria.designation.trim();
+    const department = criteria.department.trim();
+
+    if (!designation && !department) {
       this.loadEmployees();
       return;
     }
@@ -68,21 +74,26 @@ export class EmployeeListComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.employeeService.searchEmployees(criteria.designation, criteria.department).subscribe({
+    this.employeeService.searchEmployees(designation, department).subscribe({
       next: (employees) => {
-        this.employees = employees;
-        this.isLoading = false;
+        this.ngZone.run(() => {
+          this.employees = employees;
+          this.isLoading = false;
+          this.errorMessage = '';
+        });
       },
       error: (error) => {
-        console.log('searchEmployees error:', error);
-        this.errorMessage =
-          error?.graphQLErrors?.[0]?.message ||
-          error?.message ||
-          'Search failed.';
-        this.employees = [];
-        this.isLoading = false;
+        this.ngZone.run(() => {
+          this.errorMessage = error?.message || 'Search failed.';
+          this.employees = [];
+          this.isLoading = false;
+        });
       },
     });
+  }
+
+  viewAll(): void {
+    this.loadEmployees();
   }
 
   viewEmployee(id: string): void {
@@ -100,7 +111,9 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.deleteEmployee(id).subscribe({
       next: () => this.loadEmployees(),
       error: (error) => {
-        this.errorMessage = error?.message || 'Delete failed.';
+        this.ngZone.run(() => {
+          this.errorMessage = error?.message || 'Delete failed.';
+        });
       },
     });
   }

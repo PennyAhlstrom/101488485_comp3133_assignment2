@@ -23,11 +23,20 @@ export class EmployeeSearchBarComponent {
   });
 
   submit(): void {
-    this.search.emit(this.form.getRawValue());
+    const value = this.form.getRawValue();
+
+    this.search.emit({
+      designation: value.designation.trim(),
+      department: value.department.trim(),
+    });
   }
 
   clear(): void {
-    this.form.reset({ designation: '', department: '' });
+    this.form.setValue({
+      designation: '',
+      department: '',
+    });
+
     this.reset.emit();
   }
 }
