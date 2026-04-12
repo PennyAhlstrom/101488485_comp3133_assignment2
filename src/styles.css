@@ -1,10 +1,4 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
-@import './styles/tokens.css';
-@import './styles/theme.css';
-@import './styles/typography.css';
-@import './styles/spacing.css';
-@import './styles/utilities.css';
-@import './styles/bootstrap-overrides.css';
 
 html,
 body {
@@ -39,37 +33,6 @@ a {
   padding-bottom: 1.5rem;
 }
 
-.app-navbar {
-  background: #0d6efd;
-}
-
-.app-navbar .navbar-brand,
-.app-navbar .nav-link,
-.app-navbar .navbar-text {
-  color: #fff;
-}
-
-.app-navbar .nav-link:hover,
-.app-navbar .navbar-brand:hover {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.auth-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-  background:
-    radial-gradient(circle at top left, rgba(13, 110, 253, 0.12), transparent 35%),
-    linear-gradient(180deg, #f8fbff 0%, #eef3f9 100%);
-}
-
-.auth-card {
-  width: 100%;
-  max-width: 460px;
-}
-
 .page-card {
   border: 0;
   border-radius: 1rem;
@@ -93,8 +56,8 @@ a {
 
 .employee-photo-preview {
   width: 100%;
-  max-width: 180px;
-  height: 180px;
+  max-width: 220px;
+  height: 220px;
   object-fit: cover;
   border-radius: 1rem;
   border: 1px solid #dee2e6;
@@ -103,8 +66,8 @@ a {
 
 .employee-photo-placeholder {
   width: 100%;
-  max-width: 180px;
-  height: 180px;
+  max-width: 220px;
+  height: 220px;
   border-radius: 1rem;
   border: 1px dashed #ced4da;
   background: #fff;
@@ -128,8 +91,20 @@ a {
   font-weight: 500;
 }
 
-.cursor-pointer {
-  cursor: pointer;
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background:
+    radial-gradient(circle at top left, rgba(13, 110, 253, 0.12), transparent 35%),
+    linear-gradient(180deg, #f8fbff 0%, #eef3f9 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
 }
 
 @media (max-width: 767.98px) {
