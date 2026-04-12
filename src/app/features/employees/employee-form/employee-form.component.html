@@ -33,13 +33,12 @@
 
       <div class="field-group">
         <label class="field-label" for="gender">Gender</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-select id="gender" formControlName="gender">
-            <mat-option value="Male">Male</mat-option>
-            <mat-option value="Female">Female</mat-option>
-            <mat-option value="Other">Other</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <select id="gender" class="native-select" formControlName="gender">
+          <option value="">Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
       </div>
 
       <div class="field-group">

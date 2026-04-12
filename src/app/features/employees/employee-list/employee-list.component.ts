@@ -2,6 +2,7 @@ import { Component, inject, NgZone, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { EmployeeService } from '../../../core/services/employee.service';
 import { Employee } from '../../../core/models/employee.models';
@@ -17,6 +18,7 @@ import { EmployeeSearchBarComponent } from '../employee-search-bar/employee-sear
     CommonModule,
     RouterLink,
     MatTableModule,
+    MatSelectModule,
     MatButtonModule,
     LoadingSpinnerComponent,
     ErrorMessageComponent,

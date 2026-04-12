@@ -6,7 +6,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
 import { EmployeeService } from '../../../core/services/employee.service';
 import { UploadService } from '../../../core/services/upload.service';
 import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
@@ -21,7 +20,6 @@ import { ErrorMessageComponent } from '../../../shared/components/error-message/
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule,
     ErrorMessageComponent,
   ],
   templateUrl: './employee-form.component.html',
