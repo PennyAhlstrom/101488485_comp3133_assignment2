@@ -25,8 +25,11 @@ export class EmployeeFormComponent implements OnInit {
   employeeId: string | null = null;
   isEditMode = false;
   isSubmitting = false;
+  isUploadingPhoto = false;
   errorMessage = '';
   fileError = '';
+  selectedFile: File | null = null;
+  imagePreview = '';
 
   readonly form = this.fb.nonNullable.group({
     first_name: ['', Validators.required],
@@ -44,10 +47,6 @@ export class EmployeeFormComponent implements OnInit {
     return this.form.controls;
   }
 
-  get photoPreview(): string {
-    return this.form.controls.employee_photo.value?.trim() || '';
-  }
-
   ngOnInit(): void {
     this.employeeId = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.employeeId;
@@ -56,6 +55,8 @@ export class EmployeeFormComponent implements OnInit {
 
     this.employeeService.getEmployeeById(this.employeeId).subscribe({
       next: (employee) => {
+        const existingPhoto = employee.employee_photo ?? '';
+
         this.form.patchValue({
           first_name: employee.first_name,
           last_name: employee.last_name,
@@ -65,8 +66,10 @@ export class EmployeeFormComponent implements OnInit {
           salary: employee.salary,
           date_of_joining: this.toDateInputValue(employee.date_of_joining),
           department: employee.department,
-          employee_photo: employee.employee_photo ?? '',
+          employee_photo: existingPhoto,
         });
+
+        this.imagePreview = existingPhoto;
       },
       error: (error) => {
         this.errorMessage = error?.message || 'Unable to load employee.';
@@ -74,11 +77,12 @@ export class EmployeeFormComponent implements OnInit {
     });
   }
 
-  async onFileSelected(event: Event): Promise<void> {
+  onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
+    const file = input.files?.[0] ?? null;
 
     this.fileError = '';
+    this.selectedFile = null;
 
     if (!file) return;
 
@@ -88,12 +92,42 @@ export class EmployeeFormComponent implements OnInit {
       return;
     }
 
+    this.selectedFile = file;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = typeof reader.result === 'string' ? reader.result : '';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async addSelectedPhoto(): Promise<void> {
+    if (!this.selectedFile) {
+      this.fileError = 'Choose a photo first.';
+      return;
+    }
+
+    this.fileError = '';
+    this.isUploadingPhoto = true;
+
     try {
-      const uploadedValue = await this.uploadService.uploadFile(file);
+      const uploadedValue = await this.uploadService.uploadFile(this.selectedFile);
       this.form.patchValue({ employee_photo: uploadedValue });
+      this.imagePreview = uploadedValue;
+      this.notificationService.success('Photo added to form.');
+      this.selectedFile = null;
     } catch (error) {
       this.fileError = error instanceof Error ? error.message : 'Image upload failed.';
+    } finally {
+      this.isUploadingPhoto = false;
     }
+  }
+
+  removePhoto(): void {
+    this.selectedFile = null;
+    this.imagePreview = '';
+    this.fileError = '';
+    this.form.patchValue({ employee_photo: '' });
   }
 
   onSubmit(): void {
