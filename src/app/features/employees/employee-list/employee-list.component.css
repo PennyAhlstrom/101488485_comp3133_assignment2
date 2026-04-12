@@ -11,6 +11,14 @@
   padding: var(--space-3);
 }
 
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background: rgba(25, 118, 210, 0.06);
+}
+
 @media (max-width: 768px) {
   .page-header {
     flex-direction: column;

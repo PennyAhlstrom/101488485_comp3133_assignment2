@@ -3,7 +3,12 @@
 
 <mat-card *ngIf="!isLoading && employee" class="card-surface details-card">
   <div class="details-grid">
-    <img *ngIf="employee.employee_photo" [src]="employee.employee_photo" [alt]="employee.first_name" class="photo" />
+    <img
+      *ngIf="employee.employee_photo"
+      [src]="employee.employee_photo"
+      [alt]="employee.first_name"
+      class="photo"
+    />
 
     <div class="stack-md">
       <h1>{{ employee.first_name }} {{ employee.last_name }}</h1>
@@ -15,8 +20,8 @@
       <p><strong>Date of Joining:</strong> {{ employee.date_of_joining | date }}</p>
 
       <div class="actions-row">
+        <a mat-stroked-button routerLink="/employees">Back to Employees</a>
         <a mat-raised-button color="primary" [routerLink]="['/employees', employee.id, 'edit']">Edit</a>
-        <a mat-stroked-button routerLink="/employees">Back</a>
       </div>
     </div>
   </div>
