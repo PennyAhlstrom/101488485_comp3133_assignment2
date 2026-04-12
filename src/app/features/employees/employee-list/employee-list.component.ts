@@ -10,6 +10,8 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
 import { EmptyStateComponent } from '../../../shared/components/empty-state/empty-state.component';
 import { EmployeeSearchBarComponent } from '../employee-search-bar/employee-search-bar.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EmployeeDeleteDialogComponent } from '../employee-delete-dialog/employee-delete-dialog.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -20,6 +22,7 @@ import { EmployeeSearchBarComponent } from '../employee-search-bar/employee-sear
     MatTableModule,
     MatSelectModule,
     MatButtonModule,
+    MatDialogModule,
     LoadingSpinnerComponent,
     ErrorMessageComponent,
     EmptyStateComponent,
@@ -32,6 +35,7 @@ export class EmployeeListComponent implements OnInit {
   private readonly employeeService = inject(EmployeeService);
   private readonly router = inject(Router);
   private readonly ngZone = inject(NgZone);
+  private readonly dialog = inject(MatDialog);
 
   employees: Employee[] = [];
   isLoading = true;
@@ -106,17 +110,23 @@ export class EmployeeListComponent implements OnInit {
     this.router.navigate(['/employees', id, 'edit']);
   }
 
-  deleteEmployee(id: string): void {
-    const confirmed = window.confirm('Delete this employee?');
-    if (!confirmed) return;
-
-    this.employeeService.deleteEmployee(id).subscribe({
-      next: () => this.loadEmployees(),
-      error: (error) => {
-        this.ngZone.run(() => {
-          this.errorMessage = error?.message || 'Delete failed.';
-        });
+  deleteEmployee(employee: Employee): void {
+    const dialogRef = this.dialog.open(EmployeeDeleteDialogComponent, {
+      width: '420px',
+      data: {
+        employeeName: `${employee.first_name} ${employee.last_name}`,
       },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (!confirmed) return;
+
+      this.employeeService.deleteEmployee(employee.id).subscribe({
+        next: () => this.loadEmployees(),
+        error: (error) => {
+          this.errorMessage = error?.message || 'Delete failed.';
+        },
+      });
     });
   }
 }
