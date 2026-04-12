@@ -59,11 +59,6 @@ export class EmployeeListComponent implements OnInit {
     const designation = criteria.designation.trim();
     const department = criteria.department.trim();
 
-    if (!designation && !department) {
-      this.loadEmployees();
-      return;
-    }
-
     this.isLoading = true;
     this.errorMessage = '';
 
@@ -102,7 +97,7 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.deleteEmployee(employee.id).subscribe({
       next: () => {
         this.notificationService.success('Employee deleted successfully.');
-        this.loadEmployees();
+        this.employees = this.employees.filter((item) => item.id !== employee.id);
       },
       error: (error) => {
         this.errorMessage = error?.message || 'Delete failed.';

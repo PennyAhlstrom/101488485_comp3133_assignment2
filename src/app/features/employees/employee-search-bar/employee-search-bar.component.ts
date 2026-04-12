@@ -30,7 +30,7 @@ export class EmployeeSearchBarComponent {
   }
 
   clear(): void {
-    this.form.setValue({
+    this.form.reset({
       designation: '',
       department: '',
     });
