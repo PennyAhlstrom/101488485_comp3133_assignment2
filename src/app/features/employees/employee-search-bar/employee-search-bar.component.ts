@@ -16,23 +16,36 @@ export class EmployeeSearchBarComponent {
   private readonly fb = inject(FormBuilder);
 
   readonly form = this.fb.nonNullable.group({
-    designation: [''],
-    department: [''],
+    searchType: ['all'],
+    searchTerm: [''],
   });
 
   submit(): void {
-    const value = this.form.getRawValue();
+    const { searchType, searchTerm } = this.form.getRawValue();
+    const term = searchTerm.trim();
 
-    this.search.emit({
-      designation: value.designation.trim(),
-      department: value.department.trim(),
-    });
+    if (!term) {
+      this.reset.emit();
+      return;
+    }
+
+    if (searchType === 'department') {
+      this.search.emit({ designation: '', department: term });
+      return;
+    }
+
+    if (searchType === 'designation') {
+      this.search.emit({ designation: term, department: '' });
+      return;
+    }
+
+    this.search.emit({ designation: term, department: term });
   }
 
   clear(): void {
-    this.form.reset({
-      designation: '',
-      department: '',
+    this.form.setValue({
+      searchType: 'all',
+      searchTerm: '',
     });
 
     this.reset.emit();

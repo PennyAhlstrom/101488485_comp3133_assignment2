@@ -1,30 +1,35 @@
 <div class="card page-card">
   <div class="card-body">
+    <div class="mb-3">
+      <h2 class="dashboard-section-title">Search</h2>
+    </div>
+
     <form class="row g-3 align-items-end" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="col-12 col-md-4">
+        <label class="form-label fw-semibold" for="searchType">Search Type</label>
+        <select id="searchType" class="form-select" formControlName="searchType">
+          <option value="all">Any</option>
+          <option value="department">Department</option>
+          <option value="designation">Position / Designation</option>
+        </select>
+      </div>
+
       <div class="col-12 col-md-5">
-        <label class="form-label fw-semibold" for="designation">Position / Designation</label>
+        <label class="form-label fw-semibold" for="searchTerm">Search Value</label>
         <input
-          id="designation"
+          id="searchTerm"
           appAutofocus
           type="text"
           class="form-control"
-          formControlName="designation"
-          placeholder="e.g. Developer" />
+          formControlName="searchTerm"
+          placeholder="Enter a department or position" />
       </div>
 
-      <div class="col-12 col-md-5">
-        <label class="form-label fw-semibold" for="department">Department</label>
-        <input
-          id="department"
-          type="text"
-          class="form-control"
-          formControlName="department"
-          placeholder="e.g. IT" />
-      </div>
-
-      <div class="col-12 col-md-2 d-grid gap-2">
-        <button class="btn btn-primary" type="submit">Search</button>
-        <button class="btn btn-outline-secondary" type="button" (click)="clear()">Clear</button>
+      <div class="col-12 col-md-3">
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary flex-fill" type="submit">Search</button>
+          <button class="btn btn-outline-secondary flex-fill" type="button" (click)="clear()">Clear</button>
+        </div>
       </div>
     </form>
   </div>
