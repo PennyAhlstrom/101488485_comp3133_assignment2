@@ -6,8 +6,8 @@
 
   /* Surfaces and backgrounds */
   --color-bg: #f3f5f7;
-  --color-bg-soft: #eef2f5;
   --color-bg-top: #f7f9fb;
+  --color-bg-soft: #eef2f5;
   --color-surface: #ffffff;
   --color-surface-soft: #fafbfc;
 
@@ -16,6 +16,8 @@
   --color-text-muted: #6b7280;
   --color-on-primary: #f8fafc;
   --color-on-primary-muted: rgba(248, 250, 252, 0.82);
+  --color-link: #465463;
+  --color-link-hover: #2f3c48;
 
   /* Borders */
   --color-border: #d6dde4;
@@ -29,17 +31,25 @@
   /* Status */
   --color-danger: #c24141;
   --color-danger-dark: #a73636;
+  --color-danger-soft: #fdf2f2;
   --color-on-danger: #ffffff;
 
   --color-success: #2f855a;
   --color-success-dark: #276749;
+  --color-success-soft: #edf7f1;
   --color-on-success: #ffffff;
 
-  /* Secondary */
   --color-secondary: #e9eef3;
   --color-secondary-dark: #dbe3ea;
   --color-on-secondary: #2f3c48;
-  
+
+  --color-warning: #b7791f;
+  --color-warning-soft: #fffaf0;
+
+  /* Table */
+  --color-table-head: #eef2f5;
+  --color-table-row-hover: #f8fafc;
+
   /* Decorative */
   --color-auth-glow: rgba(95, 111, 127, 0.12);
 
