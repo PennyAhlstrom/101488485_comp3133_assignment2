@@ -25,11 +25,10 @@ export class EmployeeFormComponent implements OnInit {
   employeeId: string | null = null;
   isEditMode = false;
   isSubmitting = false;
-  isUploadingPhoto = false;
   errorMessage = '';
   fileError = '';
-  selectedFile: File | null = null;
-  imagePreview = '';
+  pendingPhotoFile: File | null = null;
+  pendingPhotoPreview = '';
 
   readonly form = this.fb.nonNullable.group({
     first_name: ['', Validators.required],
@@ -47,6 +46,10 @@ export class EmployeeFormComponent implements OnInit {
     return this.form.controls;
   }
 
+  get photoPreview(): string {
+    return this.pendingPhotoPreview || this.form.controls.employee_photo.value?.trim() || '';
+  }
+
   ngOnInit(): void {
     this.employeeId = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.employeeId;
@@ -55,8 +58,6 @@ export class EmployeeFormComponent implements OnInit {
 
     this.employeeService.getEmployeeById(this.employeeId).subscribe({
       next: (employee) => {
-        const existingPhoto = employee.employee_photo ?? '';
-
         this.form.patchValue({
           first_name: employee.first_name,
           last_name: employee.last_name,
@@ -66,10 +67,8 @@ export class EmployeeFormComponent implements OnInit {
           salary: employee.salary,
           date_of_joining: this.toDateInputValue(employee.date_of_joining),
           department: employee.department,
-          employee_photo: existingPhoto,
+          employee_photo: employee.employee_photo ?? '',
         });
-
-        this.imagePreview = existingPhoto;
       },
       error: (error) => {
         this.errorMessage = error?.message || 'Unable to load employee.';
@@ -77,12 +76,13 @@ export class EmployeeFormComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: Event): void {
+  onFileChosen(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const file = input.files?.[0] ?? null;
+    const file = input.files?.[0];
 
     this.fileError = '';
-    this.selectedFile = null;
+    this.pendingPhotoFile = null;
+    this.pendingPhotoPreview = '';
 
     if (!file) return;
 
@@ -92,42 +92,35 @@ export class EmployeeFormComponent implements OnInit {
       return;
     }
 
-    this.selectedFile = file;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = typeof reader.result === 'string' ? reader.result : '';
-    };
-    reader.readAsDataURL(file);
+    this.pendingPhotoFile = file;
+    this.pendingPhotoPreview = URL.createObjectURL(file);
   }
 
-  async addSelectedPhoto(): Promise<void> {
-    if (!this.selectedFile) {
+  async addSelectedPhoto(fileInput: HTMLInputElement): Promise<void> {
+    if (!this.pendingPhotoFile) {
       this.fileError = 'Choose a photo first.';
       return;
     }
 
     this.fileError = '';
-    this.isUploadingPhoto = true;
 
     try {
-      const uploadedValue = await this.uploadService.uploadFile(this.selectedFile);
+      const uploadedValue = await this.uploadService.uploadFile(this.pendingPhotoFile);
       this.form.patchValue({ employee_photo: uploadedValue });
-      this.imagePreview = uploadedValue;
-      this.notificationService.success('Photo added to form.');
-      this.selectedFile = null;
+      this.pendingPhotoFile = null;
+      this.pendingPhotoPreview = '';
+      fileInput.value = '';
+      this.notificationService.success('Photo added successfully.');
     } catch (error) {
       this.fileError = error instanceof Error ? error.message : 'Image upload failed.';
-    } finally {
-      this.isUploadingPhoto = false;
     }
   }
 
-  removePhoto(): void {
-    this.selectedFile = null;
-    this.imagePreview = '';
-    this.fileError = '';
+  removePhoto(fileInput: HTMLInputElement): void {
+    this.pendingPhotoFile = null;
+    this.pendingPhotoPreview = '';
     this.form.patchValue({ employee_photo: '' });
+    fileInput.value = '';
   }
 
   onSubmit(): void {

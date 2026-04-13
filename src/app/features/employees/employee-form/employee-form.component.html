@@ -3,7 +3,7 @@
     <div class="mb-4">
       <h1 class="h3 page-title">{{ isEditMode ? 'Edit Employee' : 'Add Employee' }}</h1>
       <p class="page-subtitle">
-        {{ isEditMode ? 'Update employee information.' : 'Create a new employee record.' }}
+        {{ isEditMode ? 'Update employee information and profile photo.' : 'Create a new employee record.' }}
       </p>
     </div>
 
@@ -132,47 +132,33 @@
         </div>
 
         <div class="col-12 col-lg-7">
-          <label class="form-label fw-semibold" for="employeeFile">Profile Photo</label>
+          <label class="form-label fw-semibold" for="employeeFile">Choose Profile Photo</label>
           <input
+            #employeeFileInput
             id="employeeFile"
             type="file"
-            class="form-control mb-3"
+            class="form-control"
             accept="image/*"
-            (change)="onFileSelected($event)" />
+            (change)="onFileChosen($event)" />
 
-          <div class="d-flex gap-2 flex-wrap">
-            <button
-              class="btn btn-outline-primary"
-              type="button"
-              (click)="addSelectedPhoto()"
-              [disabled]="!selectedFile || isUploadingPhoto">
-              <span *ngIf="!isUploadingPhoto">Add Photo</span>
-              <span *ngIf="isUploadingPhoto">Adding Photo...</span>
+          <div class="d-flex gap-2 flex-wrap mt-3">
+            <button class="btn btn-outline-primary" type="button" (click)="addSelectedPhoto(employeeFileInput)">
+              Add Photo
             </button>
-
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              (click)="removePhoto()"
-              [disabled]="!imagePreview && !form.controls.employee_photo.value">
+            <button class="btn btn-outline-secondary" type="button" (click)="removePhoto(employeeFileInput)">
               Remove Photo
             </button>
           </div>
 
           <div class="text-danger small mt-2" *ngIf="fileError">{{ fileError }}</div>
-          <div class="form-text mt-2">
-            Choose a smaller image for best performance. The photo is compressed before saving.
-          </div>
+          <div class="form-text">Choose an image, then click Add Photo.</div>
         </div>
 
         <div class="col-12 col-lg-5">
           <div class="detail-label mb-2">Photo Preview</div>
 
-          <ng-container *ngIf="imagePreview || form.controls.employee_photo.value; else noPreview">
-            <img
-              [src]="imagePreview || form.controls.employee_photo.value"
-              alt="Employee preview"
-              class="employee-photo-preview" />
+          <ng-container *ngIf="photoPreview; else noPreview">
+            <img [src]="photoPreview" alt="Employee preview" class="employee-photo-preview" />
           </ng-container>
 
           <ng-template #noPreview>
@@ -185,7 +171,7 @@
         <div class="col-12">
           <div class="d-flex flex-column flex-sm-row gap-2 justify-content-end mt-2">
             <a class="btn btn-outline-secondary" routerLink="/employees">Cancel</a>
-            <button class="btn btn-primary" type="submit" [disabled]="isSubmitting || isUploadingPhoto">
+            <button class="btn btn-primary" type="submit" [disabled]="isSubmitting">
               <span *ngIf="!isSubmitting">{{ isEditMode ? 'Update Employee' : 'Create Employee' }}</span>
               <span *ngIf="isSubmitting">Saving...</span>
             </button>
