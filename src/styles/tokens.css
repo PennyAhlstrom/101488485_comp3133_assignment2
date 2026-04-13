@@ -1,14 +1,37 @@
 :root {
-  --color-primary: #1976d2;
-  --color-primary-dark: #125ea7;
-  --color-accent: #0f172a;
-  --color-bg: #f8fafc;
+  /* Core palette */
+  --color-primary: #5f6f7f;
+  --color-primary-dark: #465463;
+  --color-accent: #2f3c48;
+
+  /* Surfaces and backgrounds */
+  --color-bg: #f3f5f7;
+  --color-bg-soft: #eef2f5;
+  --color-bg-top: #f7f9fb;
   --color-surface: #ffffff;
-  --color-border: #dbe2ea;
-  --color-text: #1e293b;
-  --color-text-muted: #64748b;
-  --color-danger: #dc2626;
-  --color-success: #16a34a;
+  --color-surface-soft: #fafbfc;
+
+  /* Text */
+  --color-text: #1f2933;
+  --color-text-muted: #6b7280;
+  --color-on-primary: #f8fafc;
+  --color-on-primary-muted: rgba(248, 250, 252, 0.82);
+
+  /* Borders */
+  --color-border: #d6dde4;
+  --color-border-strong: rgba(255, 255, 255, 0.18);
+  --color-border-soft: rgba(255, 255, 255, 0.08);
+
+  /* Interactive */
+  --color-hover-light: rgba(255, 255, 255, 0.14);
+  --color-focus-ring: rgba(95, 111, 127, 0.2);
+
+  /* Status */
+  --color-danger: #c24141;
+  --color-success: #2f855a;
+
+  /* Decorative */
+  --color-auth-glow: rgba(95, 111, 127, 0.12);
 
   --font-family-base: Inter, Arial, sans-serif;
 
@@ -24,7 +47,7 @@
   --radius-md: 10px;
   --radius-lg: 14px;
 
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
 
   --container-width: 1200px;

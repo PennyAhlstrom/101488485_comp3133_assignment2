@@ -1,4 +1,5 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+@import './styles/tokens.css';
 
 html,
 body {
@@ -7,9 +8,9 @@ body {
 }
 
 body {
-  background: #f4f7fb;
-  color: #1f2937;
-  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family-base), "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 * {
@@ -22,7 +23,7 @@ a {
 
 .page-shell {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--container-width);
   margin: 0 auto;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -36,7 +37,8 @@ a {
 .page-card {
   border: 0;
   border-radius: 1rem;
-  box-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.08);
+  box-shadow: var(--shadow-md);
+  background: var(--color-surface);
 }
 
 .page-title {
@@ -45,7 +47,7 @@ a {
 
 .page-subtitle {
   margin-bottom: 0;
-  color: #6c757d;
+  color: var(--color-text-muted);
 }
 
 .table-actions {
@@ -60,8 +62,8 @@ a {
   height: 220px;
   object-fit: cover;
   border-radius: 1rem;
-  border: 1px solid #dee2e6;
-  background: #fff;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
 }
 
 .employee-photo-placeholder {
@@ -69,12 +71,12 @@ a {
   max-width: 220px;
   height: 220px;
   border-radius: 1rem;
-  border: 1px dashed #ced4da;
-  background: #fff;
+  border: 1px dashed var(--color-border);
+  background: var(--color-surface-soft);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6c757d;
+  color: var(--color-text-muted);
   font-weight: 600;
 }
 
@@ -82,7 +84,7 @@ a {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #6c757d;
+  color: var(--color-text-muted);
   margin-bottom: 0.25rem;
 }
 
@@ -98,13 +100,75 @@ a {
   justify-content: center;
   padding: 2rem 1rem;
   background:
-    radial-gradient(circle at top left, rgba(13, 110, 253, 0.12), transparent 35%),
-    linear-gradient(180deg, #f8fbff 0%, #eef3f9 100%);
+    radial-gradient(circle at top left, var(--color-auth-glow), transparent 35%),
+    linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg-soft) 100%);
 }
 
 .auth-card {
   width: 100%;
   max-width: 460px;
+}
+
+.app-navbar {
+  background: var(--color-primary);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.app-navbar .navbar-brand,
+.app-navbar .nav-link,
+.app-navbar .navbar-text {
+  color: var(--color-on-primary);
+}
+
+.app-navbar .nav-link {
+  border-radius: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.app-navbar .nav-link:hover {
+  background: var(--color-hover-light);
+  color: var(--color-on-primary);
+}
+
+.app-navbar .navbar-brand:hover {
+  color: var(--color-on-primary);
+}
+
+.nav-meta-text {
+  font-size: 0.8rem;
+  color: var(--color-on-primary-muted) !important;
+  white-space: nowrap;
+}
+
+.nav-meta-group {
+  padding-right: 0.9rem;
+  margin-right: 0.9rem;
+  border-right: 1px solid var(--color-border-strong);
+}
+
+.dashboard-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.nav-arrow {
+  font-size: 0.8rem;
+  margin-left: 0.18rem;
+  opacity: 0.9;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+@media (max-width: 991.98px) {
+  .nav-meta-group {
+    padding-right: 0;
+    margin-right: 0;
+    border-right: 0;
+  }
 }
 
 @media (max-width: 767.98px) {
