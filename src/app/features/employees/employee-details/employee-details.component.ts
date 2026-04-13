@@ -1,6 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 import { EmployeeService } from '../../../core/services/employee.service';
 import { Employee } from '../../../core/models/employee.models';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
@@ -17,6 +18,7 @@ import { EmployeeNamePipe } from '../../../shared/pipes/employee-name.pipe';
 export class EmployeeDetailsComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly employeeService = inject(EmployeeService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   employee: Employee | null = null;
   isLoading = true;
@@ -28,18 +30,30 @@ export class EmployeeDetailsComponent implements OnInit {
     if (!id) {
       this.errorMessage = 'Employee ID is missing.';
       this.isLoading = false;
+      this.cdr.detectChanges();
       return;
     }
 
-    this.employeeService.getEmployeeById(id).subscribe({
-      next: (employee) => {
-        this.employee = employee;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        this.errorMessage = error?.message || 'Unable to load employee.';
-        this.isLoading = false;
-      },
-    });
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.employee = null;
+
+    this.employeeService
+      .getEmployeeById(id)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe({
+        next: (employee) => {
+          this.employee = employee;
+        },
+        error: (error) => {
+          this.errorMessage = error?.message || 'Unable to load employee.';
+          this.employee = null;
+        },
+      });
   }
 }
