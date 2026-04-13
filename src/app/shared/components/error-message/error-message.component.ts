@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-error-message',
   standalone: true,
-  imports: [MatCardModule],
-  template: `<mat-card class="error-card">{{ message }}</mat-card>`,
-  styles: [`.error-card { color: var(--color-danger); padding: 16px; }`],
+  template: `
+    <div class="alert alert-danger mb-0" role="alert">
+      {{ message }}
+    </div>
+  `,
 })
 export class ErrorMessageComponent {
   @Input() message = 'Something went wrong.';

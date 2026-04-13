@@ -1,47 +1,120 @@
-# 🧑‍💼 Employee Management System  
+# 🧑‍💼 Employee Management System
+
 **COMP3133 – Assignment II (Frontend + Backend Integration)**
 
 ---
 
 ## 📌 Overview
 
-This project is a full-stack **Employee Management System** built using:
+This project is a full-stack **Employee Management System** built using Angular and GraphQL.
 
-- **Frontend:** Angular (Standalone Components, Material UI, Bootstrap)
-- **Backend:** Node.js + Express + GraphQL + MongoDB
-- **Communication:** Apollo Angular (GraphQL client)
+It allows authenticated users to manage employee records through a clean, responsive dashboard with full CRUD functionality.
 
-The application allows users to:
-- Register and log in
-- View all employees
-- Search employees by department/designation
-- Add, edit, and delete employees
-- View detailed employee information
+### Key Capabilities
+
+* User authentication (signup, login, logout)
+* Employee dashboard with full CRUD operations
+* Search by department or designation
+* Profile photo upload with client-side compression
+* Responsive UI with consistent design system
+
+---
+
+## ✨ Features
+
+### 🔑 Authentication
+
+* Signup and login using GraphQL
+* JWT-based session management
+* Persistent login using localStorage
+* Logout with session clearing
+* Protected routes using Angular guards
+
+### 👥 Employee Management
+
+* View all employees in a table
+* View detailed employee profile
+* Add new employee with validation
+* Edit employee with pre-filled form values
+* Delete employee with confirmation
+
+### 🔎 Search
+
+* Search using a **single input + dropdown**
+* Search by:
+
+  * Department
+  * Position / Designation
+  * Combined (Any)
+* Reset search to reload full list
+
+### 🖼️ Image Upload
+
+* Upload employee photo via file input
+* Images are **compressed client-side**
+* Stored as base64 in database
+* Preview before saving
+* Remove photo clears file input
+
+### ✅ Validation
+
+* Field-level validation for all forms
+* Required fields enforced
+* Email format validation
+* Salary minimum validation
+* Inline error messages
+
+---
+
+## 🎨 UI / UX Design
+
+* Built using **Bootstrap 5**
+* Fully responsive layout (desktop + mobile)
+* Custom **design system using CSS tokens**
+* Muted blue-gray theme for professional look
+* Consistent button styles (primary / secondary / danger)
+* Improved navigation with mobile hamburger menu
+* Clear visual hierarchy (cards, tables, forms)
 
 ---
 
 ## 🧱 Tech Stack
 
 ### Frontend
-- Angular (Standalone APIs)
-- Angular Material
-- Bootstrap (layout utilities)
-- Apollo Angular
-- RxJS
+
+* Angular (Standalone Components)
+* Apollo Angular (GraphQL client)
+* Bootstrap 5
+* Reactive Forms
 
 ### Backend
-- Node.js
-- Express
-- GraphQL
-- MongoDB (Mongoose)
-- bcrypt (password hashing)
-- JWT (authentication)
+
+* Node.js
+* Express
+* GraphQL (Apollo Server)
+* MongoDB (Mongoose)
+* JWT Authentication
+
+---
+
+## 🎯 Design System
+
+* All colors are defined using **CSS variables (tokens)**
+* No hardcoded colors in components
+* Centralized styling for:
+
+  * Buttons
+  * Forms
+  * Tables
+  * Alerts
+* Enables consistent UI and easy theme updates
 
 ---
 
 ## 📁 Project Structure
 
-### Frontend (`assignment2`)
+### Frontend (`101488485_comp3133_assignment2`)
+
 ```
 src/app
 ├── core
@@ -60,19 +133,21 @@ src/app
 │       ├── employee-details
 │       └── employee-search-bar
 ├── layout
-│   └── app-shell
+│   ├── app-shell
+│   └── header
 ├── shared
-│   └── components
+│   ├── components
+│   ├── directives
+│   └── pipes
 └── graphql
 ```
 
-### Backend (`assignment1`)
+### Backend (`comp3133_101488485_assignment1`)
+
 ```
 ├── models
 ├── resolvers
 ├── schemas
-├── EmployeeData.json
-├── UserData.json
 ├── seedUsers.js
 ├── seedEmployees.js
 └── index.js
@@ -93,43 +168,33 @@ cd <project-folder>
 
 ## ⚙️ Backend Setup
 
-Navigate to backend:
-
 ```bash
 cd comp3133_101488485_assignment1
-```
-
-### Install dependencies
-```bash
 npm install
 ```
 
-### Configure environment variables
-Create `.env`:
+### Create `.env`
 
 ```
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 ```
 
----
-
-### Seed the database
+### Seed data
 
 ```bash
 npm run seed:users
 npm run seed:employees
 ```
 
----
-
-### Start backend server
+### Start server
 
 ```bash
 npm start
 ```
 
-Server runs at:
+Backend runs at:
+
 ```
 http://localhost:8081/graphql
 ```
@@ -138,136 +203,132 @@ http://localhost:8081/graphql
 
 ## 💻 Frontend Setup
 
-Navigate to frontend:
-
 ```bash
 cd ../101488485_comp3133_assignment2
-```
-
-### Install dependencies
-
-```bash
 npm install
-```
-
----
-
-### Run Angular app
-
-```bash
 ng serve
 ```
 
-App runs at:
+Frontend runs at:
+
 ```
 http://localhost:4200
 ```
 
 ---
 
-## 🔐 Authentication
-
-- Users must **sign up or use seeded users**
-- JWT token is stored in **localStorage**
-- Route guards protect `/employees`
-
----
-
-## 👥 Features
-
-### 🔑 Authentication
-- Login / Signup with validation
-- Session persistence across refresh
-- Logout functionality
-
-### 📋 Employee Management
-- View all employees (table view)
-- View employee details
-- Add new employee
-- Edit employee
-- Delete employee
-
-### 🔎 Search
-- Search by:
-  - Department
-  - Designation
-- Reset to view all employees
-
-### 🎨 UI/UX
-- Material UI components
-- Responsive layout
-- Centralized styling (CSS variables)
-- Loading, error, and empty states
-
----
-
 ## 📡 GraphQL Operations
 
 ### Queries
-- `getEmployees`
-- `getEmployeeById`
-- `searchEmployees`
+
+* `getEmployees`
+* `getEmployeeById`
+* `searchEmployees`
 
 ### Mutations
-- `addEmployee`
-- `updateEmployee`
-- `deleteEmployee`
-- `login`
-- `signup`
+
+* `addEmployee`
+* `updateEmployee`
+* `deleteEmployee`
+* `login`
+* `signup`
 
 ---
 
-## 📷 Screenshots
+## 📸 Screenshots
 
-> Add screenshots here
+> Place screenshots in: `public/screenshots/`
 
-```
-public/screenshots/login.png
-public/screenshots/employee-list.png
-public/screenshots/employee-form.png
-```
+### 🔐 Authentication
+
+* Login screen
+  `public/screenshots/login.png`
+* Signup screen
+  `public/screenshots/signup.png`
+
+### 📋 Dashboard
+
+* Employee list (default view)
+  `public/screenshots/employee-list.png`
+* Employee list (mobile view with hamburger menu open)
+  `public/screenshots/mobile-navbar.png`
+
+### 🔎 Search
+
+* Search bar with dropdown
+  `public/screenshots/search-bar.png`
+* Search results (filtered by department/designation)
+  `public/screenshots/search-results.png`
+
+### 👥 Employee Actions
+
+* Add employee form
+  `public/screenshots/add-employee.png`
+* Edit employee form (pre-filled data)
+  `public/screenshots/edit-employee.png`
+* Employee details view
+  `public/screenshots/employee-details.png`
+
+### 🖼️ Image Upload
+
+* Photo selection + preview
+  `public/screenshots/photo-preview.png`
+* Photo removed state
+  `public/screenshots/photo-removed.png`
+
+### ⚠️ Validation
+
+* Form validation errors
+  `public/screenshots/form-validation.png`
+
+### 🗑️ Delete
+
+* Delete confirmation (browser dialog)
+  `public/screenshots/delete-confirmation.png`
 
 ---
 
-## ⚠️ Known Issues / Notes
+## ⚠️ Notes
 
-- SSR was disabled/simplified to avoid session issues
-- Seeded users must be created via script (for password hashing)
-- Search is triggered via explicit submit (not live typing)
+* Native `<select>` dropdown uses OS styling for open options
+* Images are stored as base64 (not cloud storage)
+* Search is triggered on submit (not live typing)
 
 ---
 
 ## 🧪 Testing
 
-Backend tested using:
-- Postman (GraphQL queries/mutations)
+### Backend
 
-Frontend tested via:
-- Browser interaction
+* Tested using Postman (GraphQL queries & mutations)
+
+### Frontend
+
+* Tested via browser interactions across different screen sizes
 
 ---
 
 ## 📌 Submission Links
 
-- **GitHub Repo:** <your-repo-link>
-- **Backend Endpoint:** http://localhost:8081/graphql
-- **Frontend App:** http://localhost:4200
+* **GitHub Repository:** <your-repo-link>
+* **Backend Endpoint:** http://localhost:8081/graphql
+* **Frontend App:** http://localhost:4200
 
 ---
 
 ## ✨ Future Improvements
 
-- Pagination & sorting
-- Material dialog for delete confirmation
-- Profile image upload to cloud storage
-- Role-based authentication
-- Improved animations & UX polish
+* Pagination and sorting for employee list
+* Server-side image storage (Cloudinary / S3)
+* Role-based authentication
+* Advanced filtering (multi-field)
+* UI animations and micro-interactions
 
 ---
 
 ## 👤 Author
 
-**Penny Ahlstrom**  
+**Penny Ahlstrom**
 COMP3133 – Full Stack Development
 
 ---

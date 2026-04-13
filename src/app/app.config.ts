@@ -1,9 +1,6 @@
-import { ApplicationConfig, inject, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, inject, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { importProvidersFrom } from '@angular/core';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
@@ -15,11 +12,8 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideAnimations(),
-    importProvidersFrom(MatSnackBarModule),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideApollo(() => {
       const httpLink = inject(HttpLink);
 

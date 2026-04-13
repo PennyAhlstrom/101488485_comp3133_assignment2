@@ -1,92 +1,183 @@
-<mat-card class="card-surface form-card">
-  <div class="stack-lg">
-    <div class="stack-sm">
-      <h1>{{ isEditMode ? 'Edit Employee' : 'Add Employee' }}</h1>
-      <p class="muted">
-        {{ isEditMode ? 'Update employee information.' : 'Create a new employee record.' }}
+<div class="card page-card">
+  <div class="card-body p-4 p-lg-5">
+    <div class="mb-4">
+      <h1 class="h3 page-title">{{ isEditMode ? 'Edit Employee' : 'Add Employee' }}</h1>
+      <p class="page-subtitle">
+        {{ isEditMode ? 'Update employee information and profile photo.' : 'Create a new employee record.' }}
       </p>
     </div>
 
-    <app-error-message *ngIf="errorMessage" [message]="errorMessage" />
+    <div class="mb-3" *ngIf="errorMessage">
+      <app-error-message [message]="errorMessage" />
+    </div>
 
-    <form class="form-grid" [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="field-group">
-        <label class="field-label" for="first_name">First Name</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="first_name" matInput formControlName="first_name" />
-        </mat-form-field>
-      </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="row g-4">
+        <div class="col-12 col-md-6">
+          <label class="form-label fw-semibold" for="first_name">First Name</label>
+          <input
+            id="first_name"
+            type="text"
+            class="form-control"
+            formControlName="first_name"
+            [class.is-invalid]="f.first_name.touched && f.first_name.invalid" />
+          <div class="invalid-feedback" *ngIf="f.first_name.touched && f.first_name.errors?.['required']">
+            First name is required.
+          </div>
+        </div>
 
-      <div class="field-group">
-        <label class="field-label" for="last_name">Last Name</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="last_name" matInput formControlName="last_name" />
-        </mat-form-field>
-      </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label fw-semibold" for="last_name">Last Name</label>
+          <input
+            id="last_name"
+            type="text"
+            class="form-control"
+            formControlName="last_name"
+            [class.is-invalid]="f.last_name.touched && f.last_name.invalid" />
+          <div class="invalid-feedback" *ngIf="f.last_name.touched && f.last_name.errors?.['required']">
+            Last name is required.
+          </div>
+        </div>
 
-      <div class="field-group">
-        <label class="field-label" for="email">Email</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="email" matInput type="email" formControlName="email" />
-        </mat-form-field>
-      </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label fw-semibold" for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            class="form-control"
+            formControlName="email"
+            [class.is-invalid]="f.email.touched && f.email.invalid" />
+          <div class="invalid-feedback" *ngIf="f.email.touched && f.email.errors?.['required']">
+            Email is required.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.email.touched && f.email.errors?.['email']">
+            Enter a valid email address.
+          </div>
+        </div>
 
-      <div class="field-group">
-        <label class="field-label" for="gender">Gender</label>
-        <select id="gender" class="native-select" formControlName="gender">
-          <option value="">Select gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label fw-semibold" for="gender">Gender</label>
+          <select
+            id="gender"
+            class="form-select"
+            formControlName="gender"
+            [class.is-invalid]="f.gender.touched && f.gender.invalid">
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="invalid-feedback" *ngIf="f.gender.touched && f.gender.errors?.['required']">
+            Gender is required.
+          </div>
+        </div>
 
-      <div class="field-group">
-        <label class="field-label" for="designation">Designation</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="designation" matInput formControlName="designation" />
-        </mat-form-field>
-      </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label fw-semibold" for="designation">Position / Designation</label>
+          <input
+            id="designation"
+            type="text"
+            class="form-control"
+            formControlName="designation"
+            [class.is-invalid]="f.designation.touched && f.designation.invalid" />
+          <div class="invalid-feedback" *ngIf="f.designation.touched && f.designation.errors?.['required']">
+            Position / designation is required.
+          </div>
+        </div>
 
-      <div class="field-group">
-        <label class="field-label" for="department">Department</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="department" matInput formControlName="department" />
-        </mat-form-field>
-      </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label fw-semibold" for="department">Department</label>
+          <input
+            id="department"
+            type="text"
+            class="form-control"
+            formControlName="department"
+            [class.is-invalid]="f.department.touched && f.department.invalid" />
+          <div class="invalid-feedback" *ngIf="f.department.touched && f.department.errors?.['required']">
+            Department is required.
+          </div>
+        </div>
 
-      <div class="field-group">
-        <label class="field-label" for="salary">Salary</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="salary" matInput type="number" formControlName="salary" />
-        </mat-form-field>
-      </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label fw-semibold" for="salary">Salary</label>
+          <input
+            id="salary"
+            type="number"
+            class="form-control"
+            formControlName="salary"
+            [class.is-invalid]="f.salary.touched && f.salary.invalid" />
+          <div class="invalid-feedback" *ngIf="f.salary.touched && f.salary.errors?.['required']">
+            Salary is required.
+          </div>
+          <div class="invalid-feedback" *ngIf="f.salary.touched && f.salary.errors?.['min']">
+            Salary must be at least 1000.
+          </div>
+        </div>
 
-      <div class="field-group">
-        <label class="field-label" for="date_of_joining">Date of Joining</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="date_of_joining" matInput type="date" formControlName="date_of_joining" />
-        </mat-form-field>
-      </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label fw-semibold" for="date_of_joining">Date of Joining</label>
+          <input
+            id="date_of_joining"
+            type="date"
+            class="form-control"
+            formControlName="date_of_joining"
+            [class.is-invalid]="f.date_of_joining.touched && f.date_of_joining.invalid" />
+          <div class="invalid-feedback" *ngIf="f.date_of_joining.touched && f.date_of_joining.errors?.['required']">
+            Date of joining is required.
+          </div>
+        </div>
 
-      <div class="field-group full-span">
-        <label class="field-label" for="employee_photo">Employee Photo URL</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="employee_photo" matInput formControlName="employee_photo" />
-        </mat-form-field>
-      </div>
+        <div class="col-12">
+          <hr class="my-1" />
+        </div>
 
-      <div class="full-span stack-sm">
-        <label class="field-label" for="employeeFile">Upload Profile Photo</label>
-        <input id="employeeFile" type="file" accept="image/*" (change)="onFileSelected($event)" />
-      </div>
+        <div class="col-12 col-lg-7">
+          <label class="form-label fw-semibold" for="employeeFile">Choose Profile Photo</label>
+          <input
+            #employeeFileInput
+            id="employeeFile"
+            type="file"
+            class="form-control"
+            accept="image/*"
+            (change)="onFileChosen($event)" />
 
-      <div class="actions-row full-span">
-        <a mat-stroked-button routerLink="/employees">Back</a>
-        <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting">
-          {{ isEditMode ? 'Update Employee' : 'Create Employee' }}
-        </button>
+          <div class="d-flex gap-2 flex-wrap mt-3">
+            <button class="btn btn-outline-primary" type="button" (click)="addSelectedPhoto(employeeFileInput)">
+              Add Photo
+            </button>
+            <button class="btn btn-outline-secondary" type="button" (click)="removePhoto(employeeFileInput)">
+              Remove Photo
+            </button>
+          </div>
+
+          <div class="text-danger small mt-2" *ngIf="fileError">{{ fileError }}</div>
+          <div class="form-text">Choose an image, then click Add Photo.</div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+          <div class="detail-label mb-2">Photo Preview</div>
+
+          <ng-container *ngIf="photoPreview; else noPreview">
+            <img [src]="photoPreview" alt="Employee preview" class="employee-photo-preview" />
+          </ng-container>
+
+          <ng-template #noPreview>
+            <div class="employee-photo-placeholder">
+              No Photo Selected
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="col-12">
+          <div class="d-flex flex-column flex-sm-row gap-2 justify-content-end mt-2">
+            <a class="btn btn-outline-secondary" routerLink="/employees">Cancel</a>
+            <button class="btn btn-primary" type="submit" [disabled]="isSubmitting">
+              <span *ngIf="!isSubmitting">{{ isEditMode ? 'Update Employee' : 'Create Employee' }}</span>
+              <span *ngIf="isSubmitting">Saving...</span>
+            </button>
+          </div>
+        </div>
       </div>
     </form>
   </div>
-</mat-card>
+</div>

@@ -1,13 +1,11 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { AutofocusDirective } from '../../../shared/directives/autofocus.directive';
 
 @Component({
   selector: 'app-employee-search-bar',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [ReactiveFormsModule, AutofocusDirective],
   templateUrl: './employee-search-bar.component.html',
   styleUrl: './employee-search-bar.component.css',
 })
@@ -18,23 +16,36 @@ export class EmployeeSearchBarComponent {
   private readonly fb = inject(FormBuilder);
 
   readonly form = this.fb.nonNullable.group({
-    designation: [''],
-    department: [''],
+    searchType: ['all'],
+    searchTerm: [''],
   });
 
   submit(): void {
-    const value = this.form.getRawValue();
+    const { searchType, searchTerm } = this.form.getRawValue();
+    const term = searchTerm.trim();
 
-    this.search.emit({
-      designation: value.designation.trim(),
-      department: value.department.trim(),
-    });
+    if (!term) {
+      this.reset.emit();
+      return;
+    }
+
+    if (searchType === 'department') {
+      this.search.emit({ designation: '', department: term });
+      return;
+    }
+
+    if (searchType === 'designation') {
+      this.search.emit({ designation: term, department: '' });
+      return;
+    }
+
+    this.search.emit({ designation: term, department: term });
   }
 
   clear(): void {
     this.form.setValue({
-      designation: '',
-      department: '',
+      searchType: 'all',
+      searchTerm: '',
     });
 
     this.reset.emit();
