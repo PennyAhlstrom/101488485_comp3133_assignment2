@@ -42,17 +42,14 @@ It allows authenticated users to manage employee records through a clean, respon
 
 * Search using a **single input + dropdown**
 * Search by:
-
   * Department
   * Position / Designation
-  * Combined (Any)
 * Reset search to reload full list
 
 ### 🖼️ Image Upload
 
 * Upload employee photo via file input
 * Images are **compressed client-side**
-* Stored as base64 in database
 * Preview before saving
 * Remove photo clears file input
 
@@ -73,7 +70,7 @@ It allows authenticated users to manage employee records through a clean, respon
 * Custom **design system using CSS tokens**
 * Muted blue-gray theme for professional look
 * Consistent button styles (primary / secondary / danger)
-* Improved navigation with mobile hamburger menu
+* Mobile-friendly navbar with hamburger menu
 * Clear visual hierarchy (cards, tables, forms)
 
 ---
@@ -288,14 +285,6 @@ http://localhost:4200
 
 ---
 
-## ⚠️ Notes
-
-* Native `<select>` dropdown uses OS styling for open options
-* Images are stored as base64 (not cloud storage)
-* Search is triggered on submit (not live typing)
-
----
-
 ## 🧪 Testing
 
 ### Backend
@@ -310,17 +299,17 @@ http://localhost:4200
 
 ## 📌 Submission Links
 
-* **GitHub Repository:** <your-repo-link>
+* **GitHub Repository - Backend:** https://github.com/PennyAhlstrom/101488485_COMP3123_Backend_Assignment2
 * **Backend Endpoint:** http://localhost:8081/graphql
 * **Frontend App:** http://localhost:4200
+* **Backend Deployment:** https://comp3133-backend-assignment2.onrender.com/graphql
+* **Frontend Deployment:** https://comp3133-frontend-assignment2.vercel.app/employees
 
 ---
 
 ## ✨ Future Improvements
 
 * Pagination and sorting for employee list
-* Server-side image storage (Cloudinary / S3)
-* Role-based authentication
 * Advanced filtering (multi-field)
 * UI animations and micro-interactions
 
