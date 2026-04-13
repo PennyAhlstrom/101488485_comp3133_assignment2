@@ -28,8 +28,18 @@
 
   /* Status */
   --color-danger: #c24141;
-  --color-success: #2f855a;
+  --color-danger-dark: #a73636;
+  --color-on-danger: #ffffff;
 
+  --color-success: #2f855a;
+  --color-success-dark: #276749;
+  --color-on-success: #ffffff;
+
+  /* Secondary */
+  --color-secondary: #e9eef3;
+  --color-secondary-dark: #dbe3ea;
+  --color-on-secondary: #2f3c48;
+  
   /* Decorative */
   --color-auth-glow: rgba(95, 111, 127, 0.12);
 
